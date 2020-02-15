@@ -297,7 +297,7 @@ dotnet example.dll
 
 To configure the Tracer using a JSON file, create `datadog.json` in the instrumented application's directory. The root JSON object must be a hash with a key/value pair for each setting. For example:
 
-{{< code-block lang="json">}}
+{{< code-block lang="json" filename="datadog.json" >}}
 {
   "DD_TRACE_AGENT_URL": "http://localhost:8126",
   "DD_SERVICE_NAME": "MyService",
