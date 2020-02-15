@@ -70,14 +70,14 @@ Name                   | Value
 
 For example, to set the environment variables from a batch file before starting your application:
 
-```bat
+{{< code-block lang="cmd">}}
 rem Set environment variables
 SET COR_ENABLE_PROFILING=1
 SET COR_PROFILER={846F5F1C-F9AE-4B07-969E-05C26BC060D8}
 
 rem Start application
 example.exe
-```
+{{< /code-block >}}
 
 To set environment variables for a Windows Service, use the multi-string key `HKLM\System\CurrentControlSet\Services\{service name}\Environment` in the Windows Registry.
 
@@ -178,7 +178,7 @@ example.exe
 
 To configure the Tracer using an `app.config` or `web.config` file, use the `<appSettings>` section. For example:
 
-```xml
+{{< code-block lang="xml">}}
 <configuration>
   <appSettings>
     <add key="DD_TRACE_AGENT_URL" value="http://localhost:8126"/>
@@ -186,7 +186,7 @@ To configure the Tracer using an `app.config` or `web.config` file, use the `<ap
     <add key="DD_ADONET_ENABLED" value="false"/>
   </appSettings>
 </configuration>
-```
+{{< /code-block >}}
 
 {{% /tab %}}
 
