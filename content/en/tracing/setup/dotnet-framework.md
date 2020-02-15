@@ -52,10 +52,10 @@ To use automatic instrumentation on Windows, install the .NET Tracer on the host
 
 After installing the .NET Tracer, restart applications so they can read the new environment variables. To restart IIS, run the following commands as administrator:
 
-```cmd
+{{< code-block lang="cmd">}}
 net stop /y was
 net start w3svc
-```
+{{< /code-block >}}
 
 ### Required Environment Variables
 
@@ -130,7 +130,6 @@ There are multiple ways to configure the .NET Tracer:
 To configure the Tracer in application code, create a `TracerSettings` from the default configuration sources. Set properties on this `TracerSettings` instance before passing it to a `Tracer` constructor. For example:
 
 {{< code-block lang="csharp" >}}
-
 using Datadog.Trace;
 
 // read default configuration sources (env vars, web.config, datadog.json)
@@ -148,7 +147,6 @@ var tracer = new Tracer(settings);
 
 // set the global tracer
 Tracer.Instance = tracer;
-
 {{< /code-block >}}
 
 **Note:** Settings must be set on `TracerSettings` _before_ creating the `Tracer`. Changes made to `TracerSettings` properies after the `Tracer` is created are ignored.
@@ -161,7 +159,7 @@ To configure the Tracer using environment variables, set the variables before la
 
 For example:
 
-```cmd
+{{< code-block lang="cmd">}}
 rem Set environment variables
 SET DD_TRACE_AGENT_URL=http://localhost:8126
 SET DD_SERVICE_NAME=MyService
@@ -169,7 +167,8 @@ SET DD_ADONET_ENABLED=false
 
 rem Launch application
 example.exe
-```
+{{< /code-block >}}
+
 
 **Note:** To set environment variables for a Windows Service, use the multi-string key `HKLM\System\CurrentControlSet\Services\{service name}\Environment` in the Windows Registry.
 
@@ -195,13 +194,13 @@ To configure the Tracer using an `app.config` or `web.config` file, use the `<ap
 
 To configure the Tracer using a JSON file, create `datadog.json` in the instrumented application's directory. The root JSON object must be a hash with a key/value pair for each setting. For example:
 
-```json
+{{< code-block lang="json">}}
 {
   "DD_TRACE_AGENT_URL": "http://localhost:8126",
   "DD_SERVICE_NAME": "MyService",
   "DD_ADONET_ENABLED": "false"
 }
-```
+{{< /code-block >}}
 
 {{% /tab %}}
 

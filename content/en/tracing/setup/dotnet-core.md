@@ -56,10 +56,10 @@ To use automatic instrumentation on Windows, install the .NET Tracer on the host
 
 After installing the .NET Tracer, restart applications so they can read the new environment variables. To restart IIS, run the following commands as administrator:
 
-```cmd
+{{< code-block lang="cmd">}}
 net stop /y was
 net start w3svc
-```
+{{< /code-block >}}
 
 **Update:** Starting with .NET Tracer version `1.8.0`, the `Datadog.Trace.ClrProfiler.Managed` NuGet package is no longer required for automatic instrumentation in .NET Core. Remove it from your application when you update the .NET Tracer.
 
@@ -81,33 +81,33 @@ To generate Tracer log files for troubleshooting, you must create the logs direc
 
 For Debian or Ubuntu, download and install the Debian package:
 
-```bash
+{{< code-block lang="bash">}}
 curl -LO https://github.com/DataDog/dd-trace-dotnet/releases/download/v<TRACER_VERSION>/datadog-dotnet-apm_<TRACER_VERSION>_amd64.deb
 sudo dpkg -i ./datadog-dotnet-apm_<TRACER_VERSION>_amd64.deb
-```
+{{< /code-block >}}
 
 For CentOS or Fedora, download and install the RPM package:
 
-```bash
+{{< code-block lang="bash">}}
 curl -LO https://github.com/DataDog/dd-trace-dotnet/releases/download/v<TRACER_VERSION>/datadog-dotnet-apm-<TRACER_VERSION>-1.x86_64.rpm
 sudo rpm -Uvh datadog-dotnet-apm-<TRACER_VERSION>-1.x86_64.rpm
-```
+{{< /code-block >}}
 
 For Alpine or other [Musl-based distributions][3], download the tar archive with the musl-linked binary:
 
-```bash
+{{< code-block lang="bash">}}
 sudo mkdir -p /opt/datadog
 curl -L https://github.com/DataDog/dd-trace-dotnet/releases/download/v<TRACER_VERSION>/datadog-dotnet-apm-<TRACER_VERSION>-musl.tar.gz \
-| sudo tar xzf - -C /opt/datadog
-```
+  | sudo tar xzf - -C /opt/datadog
+{{< /code-block >}}
 
 For other distributions, download the tar archive with the glibc-linked binary:
 
-```bash
+{{< code-block lang="bash">}}
 sudo mkdir -p /opt/datadog
 curl -L https://github.com/DataDog/dd-trace-dotnet/releases/download/v<TRACER_VERSION>/datadog-dotnet-apm-<TRACER_VERSION>.tar.gz \
-| sudo tar xzf - -C /opt/datadog
-```
+  | sudo tar xzf - -C /opt/datadog
+{{< /code-block >}}
 
 [1]: https://github.com/DataDog/dd-trace-dotnet/releases
 [2]: #required-environment-variables
@@ -134,14 +134,14 @@ Name                       | Value
 
 For example, to set the environment variables from a batch file before starting your application:
 
-```bat
+{{< code-block lang="cmd">}}
 rem Set environment variables
 SET CORECLR_ENABLE_PROFILING=1
 SET CORECLR_PROFILER={846F5F1C-F9AE-4B07-969E-05C26BC060D8}
 
 rem Start application
 dotnet.exe example.dll
-```
+{{< /code-block >}}
 
 To set environment variables for a Windows Service, use the multi-string key `HKLM\System\CurrentControlSet\Services\{service name}\Environment` in the Windows Registry.
 
@@ -163,7 +163,7 @@ Name                       | Value
 
 For example, to set the environment variables them from a bash file before starting your application:
 
-```bash
+{{< code-block lang="bash">}}
 # Set environment variables
 export CORECLR_ENABLE_PROFILING=1
 export CORECLR_PROFILER={846F5F1C-F9AE-4B07-969E-05C26BC060D8}
@@ -173,11 +173,11 @@ export DD_DOTNET_TRACER_HOME=/opt/datadog
 
 # Start your application
 dotnet example.dll
-```
+{{< /code-block >}}
 
 To set the environment variables on a Linux Docker container, use [`ENV`][11]:
 
-```docker
+{{< code-block lang="docker">}}
 # Set environment variables
 ENV CORECLR_ENABLE_PROFILING=1
 ENV CORECLR_PROFILER={846F5F1C-F9AE-4B07-969E-05C26BC060D8}
@@ -187,7 +187,8 @@ ENV DD_DOTNET_TRACER_HOME=/opt/datadog
 
 # Start your application
 CMD ["dotnet", "example.dll"]
-```
+{{< /code-block >}}
+
 [11]: https://docs.docker.com/engine/reference/builder/#env
 
 {{% /tab %}}
@@ -236,7 +237,7 @@ There are multiple ways to configure the .NET Tracer:
 
 To configure the Tracer in application code, create a `TracerSettings` from the default configuration sources. Set properties on this `TracerSettings` instance before passing it to a `Tracer` constructor. For example:
 
-```csharp
+{{< code-block lang="csharp">}}
 using Datadog.Trace;
 
 // read default configuration sources (env vars, web.config, datadog.json)
@@ -254,7 +255,7 @@ var tracer = new Tracer(settings);
 
 // set the global tracer
 Tracer.Instance = tracer;
-```
+{{< /code-block >}}
 
 **Note:** Settings must be set on `TracerSettings` _before_ creating the `Tracer`. Changes made to `TracerSettings` properies after the `Tracer` is created are ignored.
 
@@ -266,7 +267,7 @@ To configure the Tracer using environment variables, set the variables before la
 
 For example, on Windows:
 
-```cmd
+{{< code-block lang="cmd">}}
 rem Set environment variables
 SET DD_TRACE_AGENT_URL=http://localhost:8126
 SET DD_SERVICE_NAME=MyService
@@ -274,13 +275,13 @@ SET DD_ADONET_ENABLED=false
 
 rem Launch application
 example.exe
-```
+{{< /code-block >}}
 
 **Note:** To set environment variables for a Windows Service, use the multi-string key `HKLM\System\CurrentControlSet\Services\{service name}\Environment` in the Windows Registry.
 
 On Linux:
 
-```bash
+{{< code-block lang="bash">}}
 # Set environment variables
 export DD_TRACE_AGENT_URL=http://localhost:8126
 export DD_SERVICE_NAME=MyService
@@ -288,7 +289,7 @@ export DD_ADONET_ENABLED=false
 
 # Launch application
 dotnet example.dll
-```
+{{< /code-block >}}
 
 {{% /tab %}}
 
@@ -296,13 +297,13 @@ dotnet example.dll
 
 To configure the Tracer using a JSON file, create `datadog.json` in the instrumented application's directory. The root JSON object must be a hash with a key/value pair for each setting. For example:
 
-```json
+{{< code-block lang="json">}}
 {
   "DD_TRACE_AGENT_URL": "http://localhost:8126",
   "DD_SERVICE_NAME": "MyService",
   "DD_ADONET_ENABLED": "false"
 }
-```
+{{< /code-block >}}
 
 {{% /tab %}}
 
