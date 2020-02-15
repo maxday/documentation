@@ -129,7 +129,8 @@ There are multiple ways to configure the .NET Tracer:
 
 To configure the Tracer in application code, create a `TracerSettings` from the default configuration sources. Set properties on this `TracerSettings` instance before passing it to a `Tracer` constructor. For example:
 
-```csharp
+{{< code-block lang="csharp" >}}
+
 using Datadog.Trace;
 
 // read default configuration sources (env vars, web.config, datadog.json)
@@ -147,7 +148,8 @@ var tracer = new Tracer(settings);
 
 // set the global tracer
 Tracer.Instance = tracer;
-```
+
+{{< /code-block >}}
 
 **Note:** Settings must be set on `TracerSettings` _before_ creating the `Tracer`. Changes made to `TracerSettings` properies after the `Tracer` is created are ignored.
 
