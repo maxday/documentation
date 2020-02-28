@@ -7,7 +7,7 @@ kind: documentation
 
 See the [Datadog-AWS Log integration][1] to configure your environment. If you still do not see your logs, double-check the following points:
 
-There are some common issues that can come up when configuring the AWS Lambda function to forward logs to Datadog. Below are some troubleshooting steps to try if you are using the Lambda function and your logs aren't reaching Datadog. If you continue to have trouble after following these steps, [contact our support team][2] for further assistance.
+There are some common issues that can come up when configuring the AWS Lambda function to forward logs to Datadog. Below are some troubleshooting steps to try if you are using the Lambda function and your logs aren't reaching Datadog. If you continue to have trouble after following these steps, [contact support][2] for further assistance.
 
 ## Check if logs are reaching the Live Tail
 
