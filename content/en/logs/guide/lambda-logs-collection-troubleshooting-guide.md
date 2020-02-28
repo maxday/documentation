@@ -40,7 +40,7 @@ From the Lambda Function:
 If you have enabled AWS Lambda metrics, you can view metrics related to Lambda invocations and errors within Datadog. The following metrics are all tagged with a key value `functionname` tag: 
 
 * `aws.lambda.invocations `: Count of times the Lambda function has been triggered / invoked
-* `aws.lambda.errors ` : Count of errors that occurred when the function was invoked
+* `aws.lambda.errors `: Count of errors that occurred when the function was invoked
 * `aws.lambda.duration ` : Average amount of time (in milliseconds) that it took for the Lambda function to finish executing
 * `aws.lambda.duration.maximum`: Maximum amount of time (in milliseconds) that it took for the Lambda function to finish executing
 * `aws.lambda.throttles` : Count of invocation attempts that were throttled due to invocation rates exceeding customer limits
