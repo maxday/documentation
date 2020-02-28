@@ -32,7 +32,7 @@ From the Lambda Function:
     * errors
     * logs
 
-3. If you don't see any data points on the "Invocations" graph, there may be a problem with the triggers you set for your function. See [Manage Your Function Triggers](#manage-your-function-triggers). To get insight into your lambda invocations without using the monitoring tab, see [Viewing Lambda metrics in Datadog](#viewing-lambda-metrics-in-datadog).
+3. If you don't see any data points on the **Invocations** graph, there may be a problem with the triggers you set for your function. See [Manage Your Function Triggers](#manage-your-function-triggers). To get insight into your lambda invocations without using the monitoring tab, see [Viewing Lambda metrics in Datadog](#viewing-lambda-metrics-in-datadog).
 4. If you see data points on the "Error count and success rate" graph, [Check the Lambda function logs](#check-the-lambda-function-logs) to see what error messages are being reported.
 
 ## Viewing Lambda metrics in Datadog
