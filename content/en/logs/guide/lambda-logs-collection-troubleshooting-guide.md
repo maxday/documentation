@@ -16,7 +16,7 @@ There are some common issues that can come up when configuring the AWS Lambda fu
     * By source: the source is often set to `source:aws` or `source:cloudwatch` but you can find other possible sources in the `parse_event_source` function in the [Lambda function][4]. 
     * By forwarder name: the Lambda function adds a forwardername tag to all the logs it forwards. You can filter on this tag by searching for `forwardername:*` or `forwardername:<function_name>`.
 3. If you see your logs in the Live Tail View but they are not reaching the Log Explorer, this could be due to one of the following reasons:
-    * Logs are too old: we drop logs with a timestamp older than 6 hours.
+    * Logs are too far in the past: Datadog only accepts logs with a timestamp older than 6 hours in the past or 1h in the future.
     * If your index has any [exclusion filters][5] set up, they may be filtering out your logs.
 
 ## Check the Lambda function monitoring tab
@@ -43,13 +43,13 @@ If you have enabled AWS Lambda metrics, you can view metrics related to Lambda i
 * `aws.lambda.errors `: Count of errors that occurred when the function was invoked
 * `aws.lambda.duration ` : Average amount of time (in milliseconds) that it took for the Lambda function to finish executing
 * `aws.lambda.duration.maximum`: Maximum amount of time (in milliseconds) that it took for the Lambda function to finish executing
-* `aws.lambda.throttles` : Count of invocation attempts that were throttled due to invocation rates exceeding customer limits
+* `aws.lambda.throttles`: Count of invocation attempts that were throttled due to invocation rates exceeding customer limits
 
 For more information on these and other AWS Lambda metrics, see [Amazon Lambda Metrics][6].
 
 ## Check the Lambda function logs
 
-From the monitoring tab, click "View logs in Cloudwatch".
+From the monitoring tab, click **View logs in Cloudwatch**.
 
 {{< img src="logs/guide/lambda-logs-cloudwatch.png" alt="Lambda logs in Cloudwatch"  style="width:80%;" >}}
 
@@ -96,7 +96,7 @@ See [Check for conflicting subscriptions](#check-for-conflicting-subscriptions) 
 You can see if there are [automatic triggers][8] set up for your Lambda function with the following steps:
 
 1. Navigate to the [Cloudwatch console](https://console.aws.amazon.com/cloudwatch/).
-2. Click "Log Groups" in the left sidebar) here you will see a list of Log Groups. There is a "subscriptions" column on the right that shows what resources (if any) are currently subscribed to the log source.
+2. Click **Log Groups** in the left sidebar here you will see a list of Log Groups. There is a **subscriptions** column on the right that shows what resources (if any) are currently subscribed to the log source.
 3. If your Lambda function isn't listed as the subscriber for the Log Group you want to monitor, redo the steps from the [automatic trigger setup documentation][8].
 4. If the Log Group you want to monitor already has a different resource subscribed to it, see [Check for conflicting subscriptions](#check-for-conflicting-subscriptions) below.
 
@@ -106,7 +106,7 @@ AWS doesn't allow for more than one resource to be subscribed to a log source. I
 
 If something is already subscribing to a Log Group that you want to monitor with the Datadog Lambda Function, you can remove it: 
 * Select the log source 
-* Select "Remove Subscription Filter" in the "Actions" pulldown
+* Select **Remove Subscription Filter** in the **Actions** pulldown
 
 [1]: /integrations/amazon_web_services/?tab=allpermissions#set-up-the-datadog-lambda-function
 [2]: https://docs.datadoghq.com/help
