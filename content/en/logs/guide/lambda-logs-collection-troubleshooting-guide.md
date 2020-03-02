@@ -3,13 +3,11 @@ title: Lambda Function Log Collection Troubleshooting Guide
 kind: documentation
 ---
 
-## Logs from lambda functions are not visible in Log Explorer page
-
-See the [Datadog-AWS Log integration][1] to configure your environment. If you still do not see your logs, double-check the following points:
+If you don't see logs forwarded from a lambda function in the Log Explorer, see the [Datadog-AWS Log integration][1] to configure your environment. If you still do not see your logs, double-check the following points:
 
 There are some common issues that can come up when configuring the AWS Lambda function to forward logs to Datadog. Below are some troubleshooting steps to try if you are using the Lambda function and your logs aren't reaching Datadog. If you continue to have trouble after following these steps, [contact support][2] for further assistance.
 
-## Check if logs are reaching the Live Tail
+## Are your logs sent to Datadog?
 
 1. Navigate to the [Log Explorer's Live Tail View][3].
 2. In the Search Bar, use a filter to limit the Live Tail View to just the logs coming from your lambda function. Some common search queries are:
@@ -35,7 +33,7 @@ From the Lambda Function:
 3. If you don't see any data points on the **Invocations** graph, there may be a problem with the triggers you set for your function. See [Manage Your Function Triggers](#manage-your-function-triggers). To get insight into your lambda invocations without using the monitoring tab, see [Viewing Lambda metrics in Datadog](#viewing-lambda-metrics-in-datadog).
 4. If you see data points on the "Error count and success rate" graph, [Check the Lambda function logs](#check-the-lambda-function-logs) to see what error messages are being reported.
 
-## Viewing Lambda metrics in Datadog
+### Viewing Lambda metrics in Datadog
 
 If you have enabled AWS Lambda metrics, you can view metrics related to Lambda invocations and errors within Datadog. The following metrics are all tagged with a key value `functionname` tag: 
 
@@ -46,6 +44,35 @@ If you have enabled AWS Lambda metrics, you can view metrics related to Lambda i
 * `aws.lambda.throttles`: Count of invocation attempts that were throttled due to invocation rates exceeding customer limits
 
 For more information on these and other AWS Lambda metrics, see [Amazon Lambda Metrics][6].
+
+### Manage your function triggers
+
+The Lambda function needs to have triggers set up in order for logs to be forwarded. If you see [in your Lambda function's monitoring tab](#check-the-lambda-function-monitoring-tab) that the function is never invoked, it may not have any triggers set up. There are two ways to set triggers for the Lambda function: manual and automatic.
+
+{{< tabs >}}
+{{% tab "Manual trigger" %}}
+You can see if there are [manual triggers][7] set up for your Lambda function by looking directly in the Lambda function's Configuration tab as in the screenshot below:
+
+{{< img src="logs/guide/manual-triggers-example.png" alt="Example of manual triggers location"  style="width:80%;" >}}
+
+**Note** If you have triggers on your Lambda function but it still isn't being invoked, there may be a conflict with another resource already subscribed to the same log source. When you add a manual trigger, an error message informs you if a resource is already subscribed to the log source:
+
+{{< img src="logs/guide/creating-trigger-error-example.png" alt="Example of error when creating trigger with subscription"  style="width:80%;" >}}
+
+See [Check for conflicting subscriptions](#check-for-conflicting-subscriptions) for more information on removing subscriptions.
+
+{{% /tab %}}
+{{% tab "Automatic trigger" %}}
+
+You can see if there are [automatic triggers][8] set up for your Lambda function with the following steps:
+
+1. Navigate to the [Cloudwatch console](https://console.aws.amazon.com/cloudwatch/).
+2. Click **Log Groups** in the left sidebar here you will see a list of Log Groups. There is a **subscriptions** column on the right that shows what resources (if any) are currently subscribed to the log source.
+3. If your Lambda function isn't listed as the subscriber for the Log Group you want to monitor, redo the steps from the [automatic trigger setup documentation][8].
+4. If the Log Group you want to monitor already has a different resource subscribed to it, see [Check for conflicting subscriptions](#check-for-conflicting-subscriptions) below.
+
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Check the Lambda function logs
 
@@ -74,31 +101,6 @@ The API key you provided doesn't match any key Datadog recognizes. Double-check 
 module initialization error: The API key is not the expected length. Please confirm that your API key is correct
 ```
 The API key is either too short or too long. Double-check that you copied it over correctly.
-
-## Manage your function triggers
-
-The Lambda function needs to have triggers set up in order for logs to be forwarded. If you see [in your Lambda function's monitoring tab](#check-the-lambda-function-monitoring-tab) that the function is never invoked, it may not have any triggers set up. There are two ways to set triggers for the Lambda function: manual and automatic.
-
-### Check that the function has triggers configured (manual)
-
-You can see if there are [manual triggers][7] set up for your Lambda function by looking directly in the Lambda function's Configuration tab as in the screenshot below:
-
-{{< img src="logs/guide/manual-triggers-example.png" alt="Example of manual triggers location"  style="width:80%;" >}}
-
-**Note** If you have triggers on your Lambda function but it still isn't being invoked, there may be a conflict with another resource already subscribed to the same log source. When you add a manual trigger, an error message informs you if a resource is already subscribed to the log source:
-
-{{< img src="logs/guide/creating-trigger-error-example.png" alt="Example of error when creating trigger with subscription"  style="width:80%;" >}}
-
-See [Check for conflicting subscriptions](#check-for-conflicting-subscriptions) for more information on removing subscriptions.
-
-### Check that the function has triggers configured (automatic)
-
-You can see if there are [automatic triggers][8] set up for your Lambda function with the following steps:
-
-1. Navigate to the [Cloudwatch console](https://console.aws.amazon.com/cloudwatch/).
-2. Click **Log Groups** in the left sidebar here you will see a list of Log Groups. There is a **subscriptions** column on the right that shows what resources (if any) are currently subscribed to the log source.
-3. If your Lambda function isn't listed as the subscriber for the Log Group you want to monitor, redo the steps from the [automatic trigger setup documentation][8].
-4. If the Log Group you want to monitor already has a different resource subscribed to it, see [Check for conflicting subscriptions](#check-for-conflicting-subscriptions) below.
 
 ## Check for conflicting subscriptions
 
