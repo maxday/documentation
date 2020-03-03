@@ -51,7 +51,7 @@ The Lambda function needs to have triggers set up in order for logs to be forwar
 
 {{< tabs >}}
 {{% tab "Manual trigger" %}}
-You can see if there are [manual triggers][7] set up for your Lambda function by looking directly in the Lambda function's Configuration tab as in the screenshot below:
+You can see if there are [manual triggers][1] set up for your Lambda function by looking directly in the Lambda function's Configuration tab as in the screenshot below:
 
 {{< img src="logs/guide/manual-triggers-example.png" alt="Example of manual triggers location"  style="width:80%;" >}}
 
@@ -61,16 +61,18 @@ You can see if there are [manual triggers][7] set up for your Lambda function by
 
 See [Check for conflicting subscriptions](#check-for-conflicting-subscriptions) for more information on removing subscriptions.
 
+[1]: https://docs.datadoghq.com/integrations/amazon_web_services/?tab=allpermissions#manually-setup-triggers
 {{% /tab %}}
 {{% tab "Automatic trigger" %}}
 
-You can see if there are [automatic triggers][8] set up for your Lambda function with the following steps:
+You can see if there are [automatic triggers][1] set up for your Lambda function with the following steps:
 
 1. Navigate to the [Cloudwatch console](https://console.aws.amazon.com/cloudwatch/).
 2. Click **Log Groups** in the left sidebar here you will see a list of Log Groups. There is a **subscriptions** column on the right that shows what resources (if any) are currently subscribed to the log source.
-3. If your Lambda function isn't listed as the subscriber for the Log Group you want to monitor, redo the steps from the [automatic trigger setup documentation][8].
+3. If your Lambda function isn't listed as the subscriber for the Log Group you want to monitor, redo the steps from the [automatic trigger setup documentation][1].
 4. If the Log Group you want to monitor already has a different resource subscribed to it, see [Check for conflicting subscriptions](#check-for-conflicting-subscriptions) below.
 
+[1]: https://docs.datadoghq.com/integrations/amazon_web_services/?tab=allpermissions#automatically-setup-triggers
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -116,5 +118,3 @@ If something is already subscribing to a Log Group that you want to monitor with
 [4]: https://github.com/DataDog/datadog-serverless-functions/blob/master/aws/logs_monitoring/lambda_function.py
 [5]: https://docs.datadoghq.com/logs/indexes/#exclusion-filters
 [6]: https://docs.datadoghq.com/integrations/amazon_lambda/?tab=awsconsole#metrics
-[7]: https://docs.datadoghq.com/integrations/amazon_web_services/?tab=allpermissions#manually-setup-triggers
-[8]: https://docs.datadoghq.com/integrations/amazon_web_services/?tab=allpermissions#automatically-setup-triggers
