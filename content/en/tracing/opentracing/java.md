@@ -137,7 +137,7 @@ public class Application {
         DDTracer tracer = DDTracer.builder()
           .writer(DDAgentWriter.builder().build())
           .serviceName("Service Name")
-          .build()
+          .build();
         GlobalTracer.register(tracer);
         datadog.trace.api.GlobalTracer.registerIfAbsent(tracer);
 
